@@ -11,9 +11,9 @@ Console.WriteLine($"Raw input received: {rawInput}");
 //  WeatherData obj = p.Parse(rawInput);
 //  Console.WriteLine($"{obj.Location}(Location) - {obj.Humidity}(Humidity) - {obj.Temperature}(Temperature)");
 //  
-//  
-//  WeatherParserFactory factory = new WeatherParserFactory();
-//  var obj = factory.GetParser(rawInput);// obj(interface) is either XmlWeatherParser or JsonWeatherParser // we dont care which on is for obj
-//  Console.WriteLine(obj.GetType().Name); 
-// WeatherData data = obj.Parse(rawInput);
-// Console.WriteLine($"{data.Location}(Location) - {data.Humidity}(Humidity) - {data.Temperature}(Temperature)");
+ 
+ WeatherParserFactory factory = new WeatherParserFactory();
+ var obj = factory.GetParser(rawInput);// obj(interface) is either XmlWeatherParser or JsonWeatherParser // we dont care which on is for obj
+ Console.WriteLine(obj.GetType().Name); 
+WeatherData data = obj.Parse(rawInput);
+Console.WriteLine($"{data.Location}(Location) - {data.Humidity}(Humidity) - {data.Temperature}(Temperature)");
