@@ -18,12 +18,12 @@ public class WeatherParserFactory
         if (string.IsNullOrWhiteSpace(input))
             throw new ArgumentException("Input cannot be empty");
 
-        var parserInTheList = _parsers // this parser it will be the parser in an item in the list that its match(HOF) true so the answer of new() will be returned !
+        var item = _parsers // this parser it will be the parser in an item in the list that its match(HOF) true so the answer of new() will be returned !
             .FirstOrDefault(p => p.match(input));// p is every item in the list (_parser)
 
-        if (parserInTheList.parser == null)
+        if (item.parser == null)
             throw new NotSupportedException("Unsupported format");
 
-        return parserInTheList.parser;
+        return item.parser;//  new XmlWeatherParser() or  new JsonWeatherParser()
     }
 }
