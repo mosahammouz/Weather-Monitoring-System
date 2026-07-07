@@ -1,19 +1,36 @@
-﻿using System.Runtime.Remoting;
-using WeatherMind.Models;
+﻿using WeatherMind.Models;
 using WeatherMind.Services.Input;
 using WeatherMind.Services.Parsing;
+using WeatherMind.Services.Config;
+using WeatherMind.Services.Engine;
+using WeatherMind.Services._05_Strategies;
+
 
 var inputService = new WeatherInputService();
 string rawInput = inputService.GetWeatherInput();
+
 Console.WriteLine($"Raw input received: {rawInput}");
-//
-// XmlWeatherParser p = new XmlWeatherParser();
-//  WeatherData obj = p.Parse(rawInput);
-//  Console.WriteLine($"{obj.Location}(Location) - {obj.Humidity}(Humidity) - {obj.Temperature}(Temperature)");
-//  
- 
- WeatherParserFactory factory = new WeatherParserFactory();
- var obj = factory.GetParser(rawInput);// obj(interface) is either XmlWeatherParser or JsonWeatherParser // we dont care which on is for obj
- Console.WriteLine(obj.GetType().Name); 
-WeatherData data = obj.Parse(rawInput);
-Console.WriteLine($"{data.Location}(Location) - {data.Humidity}(Humidity) - {data.Temperature}(Temperature)");
+
+
+var factory = new WeatherParserFactory();
+var parser = factory.GetParser(rawInput);
+
+WeatherData data = parser.Parse(rawInput);
+
+Console.WriteLine($"Parsed Data -> {data.Location} | {data.Temperature}° | {data.Humidity}%");
+
+
+var configService = new ConfigService();// to load configurations
+
+var strategies = new List<IWeatherStrategy>
+{
+    new RainStrategy(configService),
+    new SunStrategy(configService),
+    new SnowStrategy(configService)
+};
+
+
+var engine = new WeatherBotEngine(strategies); // Dependancy Injection 
+
+
+engine.process(data);

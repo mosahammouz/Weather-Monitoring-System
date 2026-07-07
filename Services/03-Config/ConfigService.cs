@@ -7,7 +7,7 @@ public class ConfigService
 
      public ConfigService()
      {
-          var path =  Path.Combine(AppContext.BaseDirectory, "Config", "botconfig.json");
+          var path =  Path.Combine(Directory.GetCurrentDirectory(), "Config", "botconfig.json");
           if(!File.Exists(path))throw new FileNotFoundException($"botconfig.json not found at: {path}");
           var json = File.ReadAllText(path);
           _config = JsonSerializer.Deserialize<WeatherBotConfigRoot>(json,
