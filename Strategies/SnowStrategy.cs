@@ -5,6 +5,12 @@ namespace WeatherMind.Services._05_Strategies;
 public class SnowStrategy : IWeatherStrategy
 {
     private readonly SnowBotConfig _config;
+
+    public SnowStrategy(WeatherBotConfigRoot W)
+    {
+      _config=  W.SnowBot;
+    }
+
     public SnowStrategy(ConfigService config)
     {
         _config = config.SnowBot;
