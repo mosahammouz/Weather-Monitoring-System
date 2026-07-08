@@ -7,4 +7,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <Compile Remove="WeatherMind.Tests\**\*.cs" />
+        <None Remove="WeatherMind.Tests\**\*.cs" />
+        <Compile Remove="**\obj\**\*.cs" />
+    </ItemGroup>
+    
 </Project>

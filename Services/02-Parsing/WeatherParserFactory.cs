@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace WeatherMind.Services.Parsing;
 
 public class WeatherParserFactory
@@ -9,8 +11,10 @@ public class WeatherParserFactory
         _parsers = new List<(Func<string, bool>, IWeatherParser)>
         {
             (input => input.TrimStart().StartsWith("{"), new JsonWeatherParser()),
-            (input => input.TrimStart().StartsWith("<"), new XmlWeatherParser())
+            (input => input.TrimStart().StartsWith("<"), new XmlWeatherParser()),
+           
         };
+        
     }
 
     public IWeatherParser GetParser(string input)
