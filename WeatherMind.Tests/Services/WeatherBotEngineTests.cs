@@ -1,6 +1,6 @@
 using Moq;
 using WeatherMind.Models;
-using WeatherMind.Services._05_Strategies;
+using WeatherMind.Services._05_Observer;
 using WeatherMind.Services.Engine;
 
 namespace WeatherMind.Tests.Services;
@@ -8,19 +8,38 @@ namespace WeatherMind.Tests.Services;
 public class WeatherBotEngineTests
 {
     [Fact]
-    public void Process_CallsExecute_OnEveryStrategy()
+    public void Process_Notifies_AllObservers()
     {
+     
+        var observer1 = new Mock<IWeatherObserver>();     // Arrange
+        var observer2 = new Mock<IWeatherObserver>();
+
+        var engine = new WeatherBotEngine();
+
+        engine.Register(observer1.Object);
+        engine.Register(observer2.Object);
+
+        var data = new WeatherData
+        {
+            Location = "Miami",
+            Temperature = 35,
+            Humidity = 90
+        };
 
 
-        var strategy1 = new Mock<IWeatherStrategy>();
-        var strategy2 = new Mock<IWeatherStrategy>();    //Arrange
-        var engine = new WeatherBotEngine(new List<IWeatherStrategy> { strategy1.Object, strategy2.Object });
-        var data = new WeatherData { Location = "Miami", Temperature = 35, Humidity = 90 };
-        
-        engine.process(data);//Act
+       
+        engine.Process(data); // Act
 
-        strategy1.Verify(s => s.Execute(data), Times.Once);  //Assert
-        strategy2.Verify(s => s.Execute(data), Times.Once);
+
+     
+        observer1.Verify(
+            o => o.Update(data),     // Assert
+            Times.Once
+        );
+
+        observer2.Verify(
+            o => o.Update(data),
+            Times.Once
+        );
     }
-
 }

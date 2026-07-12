@@ -1,23 +1,34 @@
 using WeatherMind.Models;
+using WeatherMind.Services._05_Observer;
 using WeatherMind.Services._05_Strategies;
 using WeatherMind.Services.Config;
 
 
 namespace WeatherMind.Services.Engine;
 
-public class WeatherBotEngine
+public class WeatherBotEngine : IWeatherSubject
 {
-    private readonly List<IWeatherStrategy> _strategies;
-    public WeatherBotEngine(List<IWeatherStrategy> strategies)
+    private readonly List<IWeatherObserver> _observers =new();
+    public void Register(IWeatherObserver observer)
     {
-        _strategies = strategies;
+        _observers.Add(observer);
     }
 
-    public void process(WeatherData data)
+    public void Remove(IWeatherObserver observer)
     {
-        foreach (var strategy in _strategies)
+        _observers.Remove(observer);
+    }
+
+    public void Notify(WeatherData data)
+    {
+        foreach(var observer in _observers)
         {
-            strategy.Execute(data);
+            observer.Update(data);
         }
+    }
+
+    public void Process(WeatherData data)
+    {
+        Notify(data);
     }
 }
