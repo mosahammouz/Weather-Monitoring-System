@@ -12,7 +12,7 @@ public class WeatherBotEngineTests
     {
      
         var observer1 = new Mock<IWeatherObserver>();     // Arrange
-        var observer2 = new Mock<IWeatherObserver>();
+        var observer2 = new Mock<IWeatherObserver>(); //we use Mock cuz it has Verify// so if u create a real obj u cant use Verify
 
         var engine = new WeatherBotEngine();
 
@@ -34,7 +34,7 @@ public class WeatherBotEngineTests
      
         observer1.Verify(
             o => o.Update(data),     // Assert
-            Times.Once
+            Times.Once    // checks that Update func is called at exactly one time
         );
 
         observer2.Verify(

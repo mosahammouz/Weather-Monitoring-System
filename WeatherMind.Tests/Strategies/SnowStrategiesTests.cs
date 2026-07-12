@@ -1,3 +1,4 @@
+using Moq;
 using WeatherMind.Models;
 using WeatherMind.Services._05_Strategies;
 using WeatherMind.Services.Config;
@@ -21,11 +22,15 @@ public class SnowStrategyTests : IDisposable
                 { Enabled = true, TemperatureThreshold = 0, Message = "Brrr, it's getting chilly!" }
         };
         var strategy = new SnowStrategy(config); // arrange
+       
+        
 
         strategy.Execute(new WeatherData { Temperature = -5 });  //act
+
 
         var output = _consoleOutput.ToString();
         Assert.Contains("SnowBot activated!", output);
         Assert.Contains("Brrr, it's getting chilly!", output); // assert
+       
     }
 }
