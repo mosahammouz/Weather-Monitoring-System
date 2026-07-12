@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WeatherMind")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c7cb7ae632f0b6360909d258e9c378c771aad00e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+426c1a64a33a5b8e7a033ba3283d15c775649d53")]
 [assembly: System.Reflection.AssemblyProductAttribute("WeatherMind")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WeatherMind")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
